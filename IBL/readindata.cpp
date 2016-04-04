@@ -409,6 +409,7 @@ vector<readindata> readindata::divide(int c)
 
 	}
 	//cout<<"!"<<endl;
+	int numOfTuple=1500;
 	for(int i=0;i<numOfTuple;i++)
 	{
 		int j=0;

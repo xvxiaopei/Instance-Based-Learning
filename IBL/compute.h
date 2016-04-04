@@ -19,9 +19,9 @@ using namespace std;
 
 struct Pair{
 	string targetValue;
-	double dist;
+	int dist;
 
-	Pair(string V,double d)
+	Pair(string V,int d)
 	{
 		targetValue=V;
 		dist=d;
@@ -36,21 +36,33 @@ bool operator<(Pair a,Pair b){
 
 class Compute{
 private:
-	static double dist1(vector<string> t1,vector<string> t2,int targetI )  //targetI is the index of target attr
+	static int dist1(vector<string> t1,vector<string> t2,int targetI )  //targetI is the index of target attr
 	{
 		if(t1.size()!=t2.size())
 
 			cout<<" ERROR: compare two tuple with different number of attrs."<<endl;
 			//assert(t1.size()==t2.size());
 
-		double sum=0;
+		int sum=0;
 		for(int i=0;i<t1.size();i++)
 		{
 			if(i==targetI||mask.find(i)!=mask.end()) continue;
-			if(t1[i]!=t2[i])sum+=2;
+			if(t1[i]!=t2[i])sum+=4;
 		}
-		return sqrt(sum);
+		return sum;
 	}
+	
+	static int dist2(vector<string> t1,vector<string> t2,int dist){
+		for(int i=0;i<t1.size();i++)
+		{
+			if(mask.find(i)!=mask.end()){
+				dist-=(t1[i]==t2[i])?0:4;
+			}
+		}
+		return dist;
+	}
+
+
 public:
 	static set<int> mask;
 
@@ -61,16 +73,19 @@ public:
 		if(k>a.data.size())k=a.data.size();
 		int i=0;
 		for(;i<k;i++){		
-			double cur=dist1(ins,a.data[i],targetI);
+			int cur=dist1(ins,a.data[i],targetI);
+			if(cur==0) return a.data[i][targetI];
 			q.push(Pair(a.data[i][targetI],cur));
 			//cout<<cur<<endl;
 
 		}
 
 		for(;i<a.data.size();i++){
-			double max=q.top().dist;
-			double cur=dist1(ins,a.data[i],targetI);
+			int max=q.top().dist;
+			int cur=dist1(ins,a.data[i],targetI);
 			//cout<<cur<<endl;
+			//if(i%100==0)cout<<i<<" tuples"<<endl;
+			if(cur==0) return a.data[i][targetI];
 			if(max>cur) {
 				q.pop();q.push(Pair(a.data[i][targetI],cur));
 			}
@@ -88,8 +103,7 @@ public:
 			{
 				if(tmp.targetValue==a.attrVal[targetI][j])
 				{
-					if(tmp.dist<0.000001)vote[j]+=1.0;
-					else
+					
 					vote[j]+= 1.0/tmp.dist*tmp.dist; //distance weighted
 					//cout<<1.0/tmp.dist*tmp.dist<<endl;
 					c=true;
@@ -121,6 +135,7 @@ public:
 			vector<string> t=test.data[j];
 			//cout<<t[a.targetAttr]<<"  :  ";
 			//cout<<Compute::KNN(t,div[0],k)<<endl;
+			if(j%100==0) cout<<j<<" tuples!"<<endl;
 			if(t[test.targetAttr]==Compute::KNN(t,train,k))sum+=1;
 
 		}
