@@ -99,11 +99,11 @@ int main(){
 	cin>>choose;
 	switch (choose)
 	{
-		case 1:{in="./data/car/dataConforCar.txt";out="./data/car/output1.txt";break;}
-		case 2:{in="./data/nursery/dataConforNur.txt";out="./data/nursery/output1.txt";break;} 
-		case 3:{in="./data/blog/dataConforBlog.txt"; out="./data/blog/output1.txt";break;}
-		case 4:{in="./data/mush/dataConforMsh.txt";out="./data/mush/output1.txt";break;}
-		default:{in="./data/vote/dataConforVote.txt"; out="./data/vote/output1.txt";break;}
+		case 1:{in="./data/car/dataConforCar.txt";out="./data/car/outputk_10.txt";break;}
+		case 2:{in="./data/nursery/dataConforNur.txt";out="./data/nursery/outputk_10.txt";break;} 
+		case 3:{in="./data/blog/dataConforBlog.txt"; out="./data/blog/outputk_10.txt";break;}
+		case 4:{in="./data/mush/dataConforMsh.txt";out="./data/mush/outputk_10.txt";break;}
+		default:{in="./data/vote/dataConforVote.txt"; out="./data/vote/outputk_10.txt";break;}
 	}
 
 	cout<<"Please enter the K: ";
